@@ -12,8 +12,14 @@ export class Elevator {
 	}
 
 	goToNextFloor() {
-		this.currentFloor = this.floorsQueue[0]
-		this.floorsQueue.shift()
+		if (this.floorsQueue.length != 0) {
+			this.currentFloor = this.floorsQueue[0]
+			console.log(`Going to floor ${this.currentFloor}`)
+			this.floorsQueue.shift()
+			this.currentDirection = (this.floorsQueue[0] - this.currentFloor) < 0 ? -1 : 1
+		} else {
+			this.currentDirection = 0
+		}
 	}
 }
 

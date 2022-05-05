@@ -3,7 +3,7 @@ export class Elevator {
 	currentLoad: number;
 	currentDirection: 0 | -1 | 1;
 	nextDirection: 0 | -1 | 1;
-	floorsQueue: Array<number>;
+	floorsQueue: Array<{ floor: number; direction?: 1 | -1 }>;
 
 	constructor() {
 		this.currentFloor = 0;
@@ -15,10 +15,18 @@ export class Elevator {
 
 	goToNextFloor(id: number) {
 		if (this.floorsQueue.length != 0) {
-			this.currentFloor = this.floorsQueue[0]
-			console.log(`${id} reached floor ${this.currentFloor}`)
+			this.currentFloor = this.floorsQueue[0].floor
+			console.log(`\nEle ${id} reached floor ${this.currentFloor}`)
 			this.floorsQueue.shift()
-			this.currentDirection = (this.floorsQueue[0] - this.currentFloor) < 0 ? -1 : 1
+
+			if (this.floorsQueue.length === 0) {
+				this.currentDirection = 0
+			} else {
+				this.currentDirection = this.floorsQueue[0].direction !== undefined ?
+					this.floorsQueue[0].direction :
+					(this.floorsQueue[0].floor - this.currentFloor) < 0 ? -1 : 1
+			}
+			// console.log(`ele${id} queue: ${JSON.stringify(this.floorsQueue)}, dir: ${this.currentDirection}, fl: ${this.currentFloor}\n`)
 		} else {
 			this.currentDirection = 0
 		}

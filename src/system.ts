@@ -78,9 +78,10 @@ export default class BuildingSystem {
 			// if it is between any of the floors already in the queue, then add there
 			// else add at the end
 			let indexToAdd = ele.floorsQueue.length
-			for (let i = 0; i < ele.floorsQueue.length - 1; i++) {
-				if (isBetween(floor, ele.floorsQueue[i], ele.floorsQueue[i + 1])) {
-					indexToAdd = i + 1
+			const newQueue = [ele.currentFloor, ...ele.floorsQueue]
+			for (let i = 0; i < newQueue.length - 1; i++) {
+				if (isBetween(floor, newQueue[i], newQueue[i + 1])) {
+					indexToAdd = i
 				}
 			}
 			ele.floorsQueue = [...ele.floorsQueue.slice(0, indexToAdd), floor, ...ele.floorsQueue.slice(indexToAdd)]
